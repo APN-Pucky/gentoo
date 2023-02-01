@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -30,7 +30,7 @@ RDEPEND="
 	media-libs/libpng:0=
 	>=media-libs/openjpeg-2.1:2=
 	>=media-libs/libjpeg-turbo-1.5.3-r2:0=
-	javascript? ( >=dev-lang/mujs-1.0.7:= )
+	javascript? ( >=dev-lang/mujs-1.2.0:= )
 	opengl? ( >=media-libs/freeglut-3.0.0 )
 	ssl? ( >=dev-libs/openssl-1.1:0= )
 	sys-libs/zlib
@@ -52,7 +52,8 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-1.15-openssl-x11.patch
 	# General cross fixes from Debian (refreshed)
 	"${FILESDIR}"/${PN}-1.19.0-cross-fixes.patch
-	"${FILESDIR}"/$P-no-drm.patch
+	"${FILESDIR}"/${P}-no-drm.patch
+	"${FILESDIR}"/${P}-fix-aliasing-violation.patch
 )
 
 src_prepare() {

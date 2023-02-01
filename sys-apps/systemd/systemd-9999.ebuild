@@ -1,8 +1,8 @@
-# Copyright 2011-2022 Gentoo Authors
+# Copyright 2011-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python3_{8..11} )
+PYTHON_COMPAT=( python3_{9..11} )
 
 # Avoid QA warnings
 TMPFILES_OPTIONAL=1
@@ -26,7 +26,7 @@ else
 	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~loong ~m68k ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86"
 fi
 
-inherit bash-completion-r1 flag-o-matic linux-info meson-multilib pam
+inherit bash-completion-r1 linux-info meson-multilib pam
 inherit python-any-r1 systemd toolchain-funcs udev usr-ldscript
 
 DESCRIPTION="System and service manager for Linux"
@@ -236,8 +236,7 @@ src_prepare() {
 	if ! use vanilla; then
 		PATCHES+=(
 			"${FILESDIR}/gentoo-generator-path-r2.patch"
-			"${FILESDIR}/gentoo-systemctl-disable-sysv-sync-r1.patch"
-			"${FILESDIR}/gentoo-journald-audit.patch"
+			"${FILESDIR}/gentoo-journald-audit-r1.patch"
 		)
 	fi
 
@@ -250,20 +249,6 @@ src_prepare() {
 src_configure() {
 	# Prevent conflicts with i686 cross toolchain, bug 559726
 	tc-export AR CC NM OBJCOPY RANLIB
-
-	# Broken with FORTIFY_SOURCE=3: bug #841770.
-	#
-	# Our toolchain sets F_S=2 by default w/ >= -O2, so we need
-	# to unset F_S first, then explicitly set 2, to negate any default
-	# and anything set by the user if they're choosing 3 (or if they've
-	# modified GCC to set 3).
-	#
-	if is-flagq '-O[23]' || is-flagq '-Ofast' ; then
-		# We can't unconditionally do this b/c we fortify needs
-		# some level of optimisation.
-		filter-flags -D_FORTIFY_SOURCE=3
-		append-cppflags -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2
-	fi
 
 	python_setup
 
@@ -281,6 +266,9 @@ multilib_src_configure() {
 		$(meson_use split-usr split-bin)
 		-Drootprefix="$(usex split-usr "${EPREFIX:-/}" "${EPREFIX}/usr")"
 		-Drootlibdir="${EPREFIX}/usr/$(get_libdir)"
+		# Disable compatibility with sysvinit
+		-Dsysvinit-path=
+		-Dsysvrcnd-path=
 		# Avoid infinite exec recursion, bug 642724
 		-Dtelinit-path="${EPREFIX}/lib/sysvinit/telinit"
 		# no deps

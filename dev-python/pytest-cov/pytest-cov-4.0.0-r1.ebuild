@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{8..11} pypy3 )
+PYTHON_COMPAT=( python3_{9..11} pypy3 )
 
 inherit distutils-r1
 
@@ -53,9 +53,12 @@ python_test() {
 		tests/test_pytest_cov.py::test_contexts
 	)
 
+	local src=$(
+		"${EPYTHON}" -c "import coverage as m; print(*m.__path__)" || die
+	)
 	# TODO: why do we need to do that?!
 	# https://github.com/pytest-dev/pytest-cov/issues/517
-	ln -s "${BROOT}$(python_get_sitedir)/coverage" \
+	ln -s "${src}/coverage" \
 		"${BUILD_DIR}/install$(python_get_sitedir)/coverage" || die
 
 	epytest

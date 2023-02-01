@@ -1,10 +1,10 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 DISTUTILS_USE_PEP517=hatchling
-PYTHON_COMPAT=( python3_{8..11} )
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit distutils-r1 virtualx
 
@@ -59,7 +59,10 @@ src_prepare() {
 }
 
 python_configure() {
-	cp "${BROOT}$(python_get_sitedir)/notebook/static/style/style.min.css" \
+	local src=$(
+		"${EPYTHON}" -c "import notebook as m; print(*m.__path__)" || die
+	)
+	cp "${src}/static/style/style.min.css" \
 		share/templates/classic/static/style.css || die
 }
 

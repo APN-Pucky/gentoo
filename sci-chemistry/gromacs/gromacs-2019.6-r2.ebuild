@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -11,7 +11,7 @@ SRC_URI="
 	https://ftp.gromacs.org/gromacs/${PN}-${PV/_/-}.tar.gz
 	doc? ( https://ftp.gromacs.org/manual/manual-${PV/_/-}.pdf )
 	test? ( https://ftp.gromacs.org/regressiontests/regressiontests-${PV/_/-}.tar.gz )"
-KEYWORDS="~amd64 ~arm ~x86 ~amd64-linux ~x86-linux ~x64-macos"
+KEYWORDS="amd64 arm x86 ~amd64-linux ~x86-linux ~x64-macos"
 
 ACCE_IUSE="cpu_flags_x86_sse2 cpu_flags_x86_sse4_1 cpu_flags_x86_fma4 cpu_flags_x86_avx cpu_flags_x86_avx2"
 
@@ -160,7 +160,7 @@ src_configure() {
 			cuda=( "-DGMX_GPU=ON" )
 		local opencl=( "-DGMX_USE_OPENCL=OFF" )
 		use opencl && opencl=( "-DGMX_USE_OPENCL=ON" ) cuda=( "-DGMX_GPU=ON" )
-		mycmakeargs=(
+		local mycmakeargs=(
 			${mycmakeargs_pre[@]} ${p}
 			-DGMX_MPI=OFF
 			-DGMX_THREAD_MPI=$(usex threads)
@@ -176,7 +176,7 @@ src_configure() {
 		  sed -i '/SET(CMAKE_INSTALL_NAME_DIR/s/^/#/' "${WORKDIR}/${P}_${x}/gentoo_rules.cmake" || die
 		use mpi || continue
 		einfo "Configuring for ${x} precision with mpi"
-		mycmakeargs=(
+		local mycmakeargs=(
 			${mycmakeargs_pre[@]} ${p}
 			-DGMX_THREAD_MPI=OFF
 			-DGMX_MPI=ON

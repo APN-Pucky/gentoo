@@ -1,8 +1,8 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_{8..10} )
+PYTHON_COMPAT=( python3_{9..10} )
 
 inherit cmake python-single-r1
 
@@ -47,7 +47,7 @@ src_prepare() {
 }
 
 src_configure() {
-	mycmakeargs=(
+	local mycmakeargs=(
 		-DPYTHON_EXECUTABLE="${PYTHON}"
 		-DGR_PKG_DOC_DIR="/usr/share/doc/${P}"
 	)

@@ -1,9 +1,9 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8..11} )
+PYTHON_COMPAT=( python3_{9..11} )
 inherit meson-multilib python-any-r1
 
 if [[ ${PV} == 9999 ]]; then
@@ -43,17 +43,20 @@ DEPEND="
 	${RDEPEND}
 	dev-util/vulkan-headers"
 BDEPEND="
-	$(python_gen_any_dep 'dev-python/jinja[${PYTHON_USEDEP}]')
+	$(python_gen_any_dep '
+		dev-python/jinja[${PYTHON_USEDEP}]
+		dev-python/setuptools[${PYTHON_USEDEP}]')
 	virtual/pkgconfig"
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-5.229.1-llvm-libunwind.patch
 	"${FILESDIR}"/${PN}-5.229.1-python-executable.patch
-	"${FILESDIR}"/${PN}-5.229.1-shared-glslang.patch
 )
 
 python_check_deps() {
-	python_has_version "dev-python/jinja[${PYTHON_USEDEP}]"
+	# note: setuptools can be removed when using >=glad-2.0.2
+	python_has_version "dev-python/jinja[${PYTHON_USEDEP}]" &&
+	python_has_version "dev-python/setuptools[${PYTHON_USEDEP}]"
 }
 
 src_unpack() {

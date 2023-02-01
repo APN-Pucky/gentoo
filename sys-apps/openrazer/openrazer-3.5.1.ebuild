@@ -1,11 +1,11 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8..10} )
+PYTHON_COMPAT=( python3_{9..11} )
 
-inherit readme.gentoo-r1 systemd udev xdg-utils distutils-r1 python-r1 linux-mod
+inherit readme.gentoo-r1 systemd udev xdg-utils distutils-r1 linux-mod
 
 DESCRIPTION="Drivers and user-space daemon to control Razer devices on GNU/Linux"
 HOMEPAGE="https://openrazer.github.io/
@@ -15,7 +15,7 @@ SRC_URI="https://github.com/${PN}/${PN}/archive/v${PV}.tar.gz
 
 LICENSE="GPL-2+"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="amd64 ~x86"
 
 IUSE="+client +daemon"
 REQUIRED_USE="

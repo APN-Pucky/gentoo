@@ -1,9 +1,9 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8..11} )
+PYTHON_COMPAT=( python3_{9..11} )
 PYTHON_REQ_USE="threads(+)"
 inherit flag-o-matic python-single-r1 waf-utils multilib-minimal
 
@@ -55,10 +55,6 @@ BDEPEND="
 PDEPEND="tools? ( media-sound/jack-example-tools )"
 
 DOCS=( AUTHORS.rst ChangeLog.rst README.rst README_NETJACK2 )
-
-PATCHES=(
-	"${FILESDIR}"/${PN}-1.9.21-python3.11.patch
-)
 
 src_prepare() {
 	default

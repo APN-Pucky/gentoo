@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -8,7 +8,7 @@ EAPI=8
 #	properly before building.
 # - replace usex by usev once we bump to EAPI 8
 
-PYTHON_COMPAT=( python3_{8..10} )
+PYTHON_COMPAT=( python3_{9..10} )
 WEBAPP_OPTIONAL=yes
 WEBAPP_MANUAL_SLOT=yes
 
@@ -188,6 +188,12 @@ pkg_pretend() {
 		# 10.2 GiB install directory, 6.4 GiB build directory with max. USE flags
 		CHECKREQS_MEMORY="7G"
 		CHECKREQS_DISK_BUILD="14G"
+		if [[ ${VTK_CUDA_ARCH} = native ]]; then
+			eerror "Using native CUDA arches is currently broken."
+			eerror "Please set it to one of the common arch names:"
+			eerror "kepler, maxwell, pascal, turing or ampere."
+			die "Please set VTK_CUDA_ARCH environment variable!"
+		fi
 	fi
 
 	if use qt6 && use qt5; then
@@ -217,6 +223,12 @@ pkg_setup() {
 	if use cuda; then
 		CHECKREQS_MEMORY="7G"
 		CHECKREQS_DISK_BUILD="14G"
+		if [[ ${VTK_CUDA_ARCH} = native ]]; then
+			eerror "Using native CUDA arches is currently broken."
+			eerror "Please set it to one of the common arch names:"
+			eerror "kepler, maxwell, pascal, turing or ampere."
+			die "Please set VTK_CUDA_ARCH environment variable!"
+		fi
 	fi
 
 	if use qt6 && use qt5; then

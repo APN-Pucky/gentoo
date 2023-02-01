@@ -1,8 +1,8 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_{8..11} )
+PYTHON_COMPAT=( python3_{9..11} )
 DISABLE_AUTOFORMATTING=1
 FORCE_PRINT_ELOG=1
 
@@ -111,7 +111,7 @@ that are currently available with packages include:
   autocompletion support.
 * dev-util/valgrind for integration with valgrind.
 * dev-util/meson for integration with the Meson build system.
-* dev-util/cargo for integration with the Rust Cargo build system.
+* virtual/rust for integration with the Rust Cargo build system.
 * dev-util/cmake for integration with the CMake build system.
 * net-libs/nodejs[npm] for integration with the NPM package system.
 '

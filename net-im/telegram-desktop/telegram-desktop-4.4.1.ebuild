@@ -1,9 +1,9 @@
-# Copyright 2020-2022 Gentoo Authors
+# Copyright 2020-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8..11} )
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit xdg cmake python-any-r1 optfeature flag-o-matic
 
@@ -16,7 +16,7 @@ S="${WORKDIR}/${MY_P}"
 
 LICENSE="BSD GPL-3-with-openssl-exception LGPL-2+"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv"
+KEYWORDS="amd64 ~arm64 ~ppc64 ~riscv"
 IUSE="+dbus enchant +fonts +hunspell +jemalloc screencast +spell qt6 qt6-imageformats wayland +X"
 REQUIRED_USE="
 	spell? (

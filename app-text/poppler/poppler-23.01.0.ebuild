@@ -15,7 +15,7 @@ else
 
 	SRC_URI="https://poppler.freedesktop.org/${P}.tar.xz"
 	SRC_URI+=" verify-sig? ( https://poppler.freedesktop.org/${P}.tar.xz.sig )"
-	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~loong ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
+	KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~loong ~mips ppc ppc64 ~riscv ~s390 sparc x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~sparc-solaris ~sparc64-solaris ~x64-solaris ~x86-solaris"
 	SLOT="0/126"   # CHECK THIS WHEN BUMPING!!! SUBSLOT IS libpoppler.so SOVERSION
 fi
 
@@ -38,10 +38,10 @@ COMMON_DEPEND="
 		introspection? ( >=dev-libs/gobject-introspection-1.64:= )
 	)
 	curl? ( net-misc/curl )
-	jpeg? ( media-libs/libjpeg-turbo:= )
+	jpeg? ( >=media-libs/libjpeg-turbo-1.1.0:= )
 	jpeg2k? ( >=media-libs/openjpeg-2.3.0-r1:2= )
 	lcms? ( media-libs/lcms:2 )
-	nss? ( >=dev-libs/nss-3.19:0 )
+	nss? ( >=dev-libs/nss-3.49 )
 	png? ( media-libs/libpng:0= )
 	qt5? (
 		dev-qt/qtcore:5

@@ -43,7 +43,7 @@ RESTRICT="!test? ( test )"
 RDEPEND="
 	app-arch/xz-utils
 	app-arch/zstd:=
-	dev-cpp/rapidyaml:=
+	>=dev-cpp/rapidyaml-0.5:=
 	dev-libs/libaio
 	dev-libs/libchdr
 	dev-libs/libfmt:=
@@ -70,19 +70,17 @@ DEPEND="
 	${RDEPEND}
 	x11-base/xorg-proto
 	test? ( dev-cpp/gtest )"
-BDEPEND="
-	dev-lang/perl
-	dev-qt/qttools[linguist]"
+BDEPEND="dev-qt/qttools[linguist]"
 
 FILECAPS=(
 	-m 0755 "CAP_NET_RAW+eip CAP_NET_ADMIN+eip" usr/bin/pcsx2
 )
 
 PATCHES=(
-	"${FILESDIR}"/${PN}-1.7.0-crcs.patch
 	"${FILESDIR}"/${PN}-1.7.3351-unbundle.patch
 	"${FILESDIR}"/${PN}-1.7.3468-cubeb-automagic.patch
 	"${FILESDIR}"/${PN}-1.7.3773-lto.patch
+	"${FILESDIR}"/${PN}-1.7.3803-rapidyaml-0.5.0.patch
 )
 
 src_unpack() {
@@ -125,11 +123,6 @@ src_unpack() {
 }
 
 src_prepare() {
-	# could depend on >=0.5 for unconditional, but rather not force it yet
-	# https://github.com/PCSX2/pcsx2/issues/7623
-	has_version '>=dev-cpp/rapidyaml-0.5' &&
-		eapply "${FILESDIR}"/${PN}-1.7.3803-rapidyaml-0.5.0.patch
-
 	cmake_src_prepare
 
 	sed -e "/EmuFolders::AppRoot =/s|=.*|= \"${EPREFIX}/usr/share/${PN}\";|" \

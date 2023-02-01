@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=hatchling
-PYTHON_COMPAT=( python3_{8..11} )
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit distutils-r1
 
@@ -14,7 +14,7 @@ SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64 ~ia64 ~loong ~ppc ~ppc64"
+KEYWORDS="~amd64 ~arm64 ~ia64 ~loong ~ppc ~ppc64 ~riscv ~x86"
 
 RDEPEND="
 	>=dev-python/anyio-3.1.0[${PYTHON_USEDEP}]

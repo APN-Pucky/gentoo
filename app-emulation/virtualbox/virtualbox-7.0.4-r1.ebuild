@@ -1,4 +1,4 @@
-# Copyright 2022 Gentoo Authors
+# Copyright 2022-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -15,7 +15,7 @@ EAPI=8
 #  trunk branch but not release branch.
 #
 #  See bug #785835, bug #856121.
-PYTHON_COMPAT=( python3_{8..11} )
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit desktop edo flag-o-matic java-pkg-opt-2 linux-info multilib optfeature pax-utils \
 	python-single-r1 tmpfiles toolchain-funcs udev xdg
@@ -31,7 +31,7 @@ S="${WORKDIR}/${MY_PN}-${PV}"
 
 LICENSE="GPL-2+ GPL-3 LGPL-2.1 MIT dtrace? ( CDDL )"
 SLOT="0/$(ver_cut 1-2)"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE="alsa dbus debug doc dtrace +gui java lvm pam pch pulseaudio +opengl python +sdk +sdl +udev vboxwebsrv vde vnc"
 
 unset WATCOM #856769
@@ -121,6 +121,7 @@ RDEPEND="
 "
 BDEPEND="
 	${PYTHON_DEPS}
+	app-arch/tar
 	>=dev-lang/yasm-0.6.2
 	dev-libs/libIDL
 	dev-qt/linguist-tools:5
@@ -319,6 +320,9 @@ src_prepare() {
 	sed -i "s:'/sbin/vboxconfig':'emerge -1 virtualbox-modules':" \
 		src/VBox/Frontends/VirtualBox/src/main.cpp \
 		src/VBox/VMM/VMMR3/VM.cpp || die
+
+	# 890561
+	echo -e "\nVBOX_GTAR=gtar" >> LocalConfig.kmk || die
 }
 
 src_configure() {

@@ -1,9 +1,9 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8..11} )
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit flag-o-matic meson-multilib python-any-r1 xdg-utils
 
@@ -63,9 +63,6 @@ src_prepare() {
 		-e '/tests\/macos\.tests/d' \
 		test/shape/data/in-house/Makefile.sources \
 		|| die
-
-	# bug #618772
-	append-cxxflags -std=c++14
 
 	# bug #790359
 	filter-flags -fexceptions -fthreadsafe-statics
